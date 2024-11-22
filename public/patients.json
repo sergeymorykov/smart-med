@@ -1,0 +1,92 @@
+[
+  {
+    "fullname": "John Doe",
+    "date_of_birth": "1985-08-15",
+    "gender": "Male",
+    "address": "123 Main St, Springfield, IL, 62701",
+    "email": "john.doe@example.com",
+    "phone_number": "+1 555-123-4567",
+    "photo": "https://randomuser.me/api/portraits/men/1.jpg"
+  },
+  {
+    "fullname": "Jane Smith",
+    "date_of_birth": "1990-02-25",
+    "gender": "Female",
+    "address": "456 Oak Rd, Lakeview, WI, 54321",
+    "email": "jane.smith@example.com",
+    "phone_number": "+1 555-234-5678",
+    "photo": "https://randomuser.me/api/portraits/women/2.jpg"
+  },
+  {
+    "fullname": "Alice Johnson",
+    "date_of_birth": "1978-11-10",
+    "gender": "Female",
+    "address": "789 Pine Ave, Rivertown, TX, 75001",
+    "email": "alice.johnson@example.com",
+    "phone_number": "+1 555-345-6789",
+    "photo": "https://randomuser.me/api/portraits/women/3.jpg"
+  },
+  {
+    "fullname": "Michael Brown",
+    "date_of_birth": "1992-06-20",
+    "gender": "Male",
+    "address": "321 Birch Blvd, Hilltop, CO, 80012",
+    "email": "michael.brown@example.com",
+    "phone_number": "+1 555-456-7890",
+    "photo": "https://randomuser.me/api/portraits/men/4.jpg"
+  },
+  {
+    "fullname": "Emily Davis",
+    "date_of_birth": "1983-12-05",
+    "gender": "Female",
+    "address": "654 Cedar Ln, Valleyview, FL, 33101",
+    "email": "emily.davis@example.com",
+    "phone_number": "+1 555-567-8901",
+    "photo": "https://randomuser.me/api/portraits/women/5.jpg"
+  },
+  {
+    "fullname": "David Wilson",
+    "date_of_birth": "1995-03-17",
+    "gender": "Male",
+    "address": "987 Elm St, Greendale, OH, 44123",
+    "email": "david.wilson@example.com",
+    "phone_number": "+1 555-678-9012",
+    "photo": "https://randomuser.me/api/portraits/men/6.jpg"
+  },
+  {
+    "fullname": "Sophia Miller",
+    "date_of_birth": "2000-09-10",
+    "gender": "Female",
+    "address": "123 Maple Ave, Springfield, MA, 01103",
+    "email": "sophia.miller@example.com",
+    "phone_number": "+1 555-789-0123",
+    "photo": "https://randomuser.me/api/portraits/women/7.jpg"
+  },
+  {
+    "fullname": "James Taylor",
+    "date_of_birth": "1980-04-18",
+    "gender": "Male",
+    "address": "432 Oak St, Clearview, AZ, 85701",
+    "email": "james.taylor@example.com",
+    "phone_number": "+1 555-890-1234",
+    "photo": "https://randomuser.me/api/portraits/men/8.jpg"
+  },
+  {
+    "fullname": "Isabella Anderson",
+    "date_of_birth": "1998-01-22",
+    "gender": "Female",
+    "address": "567 Pine Blvd, Sunset Beach, CA, 90210",
+    "email": "isabella.anderson@example.com",
+    "phone_number": "+1 555-901-2345",
+    "photo": "https://randomuser.me/api/portraits/women/9.jpg"
+  },
+  {
+    "fullname": "William Thomas",
+    "date_of_birth": "1993-07-30",
+    "gender": "Male",
+    "address": "234 Birch St, Creekside, NV, 89501",
+    "email": "william.thomas@example.com",
+    "phone_number": "+1 555-012-3456",
+    "photo": "https://randomuser.me/api/portraits/men/10.jpg"
+  }
+]
