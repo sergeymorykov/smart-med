@@ -16,7 +16,8 @@ export const loginDoctor = async (email, password) => {
 };
 
 export const addPatient = async (token, email, fullname, gender, address, phone_number) => {
-  const response = await axios.post(`${API_URL}/patient`, {email, fullname, gender, address, phone_number}, {
+  console.log({email, fullname, gender, address, phone_number});
+  const response = await axios.post(`${API_URL}/api/patients`, {email, fullname, gender, address, phone_number}, {
     headers: { Authorization: `Bearer ${token}` },
   });
   return response.data;
@@ -30,14 +31,14 @@ export const getPatients = async (token) => {
 };
 
 export const getPatient = async (token, id) => {
-  const response = await axios.get(`${API_URL}/api/patients`, { id }, {
+  const response = await axios.get(`${API_URL}/api/patients/${id}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   return response.data;
 };
 
 export const getAnalysis = async (token, id) => {
-  const response = await axios.get(`${API_URL}/api/${id}/analysis`, {
+  const response = await axios.get(`${API_URL}/api/patients/${id}/analysis`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   return response.data;

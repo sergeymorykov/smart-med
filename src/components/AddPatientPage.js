@@ -21,21 +21,27 @@ const RegistrationPatientPage = () => {
   const navigate = useNavigate();
 
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    const token = localStorage.getItem('token');
+    const fetchData = async () => {
+      const token = localStorage.getItem('token');
+  
+      if (!token) {
+        navigate('/'); // Перенаправляем на главную, если токен отсутствует
+        return;
+      }
+  
+      try {
 
-    if (!token) {
-      navigate('/');
-    }
+        await addPatient(token, email, surname + " " + name, birthDate, gender, address, phone_number);
+        navigate('/patient-list'); 
 
-    try {
-      await addPatient(token, email, surname + " " + name, birthDate, gender, address, phone_number);
-      navigate('/patient-list'); 
-    } catch (error) {
-      setError('Ошибка регистрации');
-    }
+      } catch (error) {
+        setError('Ошибка регистрации');
+      }
+    };
+    fetchData();
   };
 
   return (

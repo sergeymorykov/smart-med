@@ -11,15 +11,29 @@ function PatientListPage() {
   
   const navigate = useNavigate();
   // Загружаем данные пациентов из JSON-файла
-  useEffect(async () => {
-    const token = localStorage.getItem('token');
+  useEffect(() => {  
 
-    if(!token){
-      navigate('/');
-    }
-    const patientsData = await getPatients(token);
-    setPatients(patientsData);
-    setLoading(false);
+    const fetchData = async () => {
+      const token = localStorage.getItem('token');
+  
+      if (!token) {
+        navigate('/'); // Перенаправляем на главную, если токен отсутствует
+        return;
+      }
+  
+      try {
+        const patientsData = await getPatients(token);
+  
+        setPatients(patientsData);
+        setLoading(false);
+  
+        console.log(patientsData);
+        
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
   }, []);
 
   const handleClickOpen = () => {

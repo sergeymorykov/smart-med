@@ -1,44 +1,43 @@
 import React, {useState} from 'react';
-import { useParams } from 'react-router-dom';
 import { Typography, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TableSortLabel } from '@mui/material';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getPatient, getAnalysis } from '../services/api';
+import { useParams } from 'react-router-dom';
 
-const patientsData = [
-    { email: "emily.davis@example.com", pulse: 75, respiratory_rate: 16, oxygen_saturation: 98, systolic_blood_pressure: 120, diastolic_blood_pressure: 80, heart_rate: 72, analysis_timestamp: "2024-11-01T08:00:00Z" },
-    { email: "emily.davis@example.com", pulse: 78, respiratory_rate: 17, oxygen_saturation: 97, systolic_blood_pressure: 122, diastolic_blood_pressure: 81, heart_rate: 74, analysis_timestamp: "2024-11-02T08:00:00Z" },
-    { email: "emily.davis@example.com", pulse: 77, respiratory_rate: 16, oxygen_saturation: 99, systolic_blood_pressure: 119, diastolic_blood_pressure: 79, heart_rate: 70, analysis_timestamp: "2024-11-03T08:00:00Z" },
-    { email: "emily.davis@example.com", pulse: 80, respiratory_rate: 18, oxygen_saturation: 96, systolic_blood_pressure: 125, diastolic_blood_pressure: 82, heart_rate: 76, analysis_timestamp: "2024-11-04T08:00:00Z" },
-    { email: "emily.davis@example.com", pulse: 82, respiratory_rate: 17, oxygen_saturation: 97, systolic_blood_pressure: 128, diastolic_blood_pressure: 83, heart_rate: 78, analysis_timestamp: "2024-11-05T08:00:00Z" },
-    { email: "emily.davis@example.com", pulse: 79, respiratory_rate: 15, oxygen_saturation: 98, systolic_blood_pressure: 123, diastolic_blood_pressure: 80, heart_rate: 73, analysis_timestamp: "2024-11-06T08:00:00Z" },
-    { email: "emily.davis@example.com", pulse: 85, respiratory_rate: 19, oxygen_saturation: 95, systolic_blood_pressure: 130, diastolic_blood_pressure: 85, heart_rate: 80, analysis_timestamp: "2024-11-07T08:00:00Z" },
-    { email: "emily.davis@example.com", pulse: 74, respiratory_rate: 16, oxygen_saturation: 99, systolic_blood_pressure: 118, diastolic_blood_pressure: 77, heart_rate: 71, analysis_timestamp: "2024-11-08T08:00:00Z" },
-    { email: "emily.davis@example.com", pulse: 83, respiratory_rate: 18, oxygen_saturation: 96, systolic_blood_pressure: 127, diastolic_blood_pressure: 84, heart_rate: 79, analysis_timestamp: "2024-11-09T08:00:00Z" },
-    { email: "emily.davis@example.com", pulse: 76, respiratory_rate: 17, oxygen_saturation: 98, systolic_blood_pressure: 121, diastolic_blood_pressure: 78, heart_rate: 75, analysis_timestamp: "2024-11-10T08:00:00Z" }
-  ];
 
-const PatientDetail = ({ id }) => {
+
+const PatientDetail = () => {
+  const {patientId} = useParams();
   const navigate = useNavigate();
-
-  const [patient, setPatient] = useState({});
+  const [patient, setPatient] = useState([]);
   const [analysis, setAnalysis] = useState([]);
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('analysis_timestamp'); // По умолчанию сортируем по пульсу
 
-  useEffect(async () => {
-    const token = localStorage.getItem('token');
-
-    if(!token){
-      navigate('/');
-    }
-    const patientsData = await getPatient(token, id);
-
-    const analysisData = await getAnalysis(token, id);
-
-    setPatient(patientsData);
-    setAnalysis(analysisData);
-
+  useEffect(() => {
+    const fetchData = async () => {
+      const token = localStorage.getItem('token');
+  
+      if (!token) {
+        navigate('/'); // Перенаправляем на главную, если токен отсутствует
+        return;
+      }
+  
+      try {
+        const patientsData = await getPatient(token, patientId);
+        const analysisData = await getAnalysis(token, patientId);
+  
+        setPatient(patientsData);
+        setAnalysis(analysisData);
+  
+        console.log(patientsData);
+        console.log(analysisData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
   }, []);
 
   // Функция для обработки сортировки
@@ -73,14 +72,13 @@ const PatientDetail = ({ id }) => {
     return 0;
   };
 
+
+
   // Отсортированные данные
-  const sortedData = sortData(analysis, comparator);
+  const sortedData = analysis ? sortData(analysis, comparator) : [];
 
 
-
-  if (!patient) {
-    return <Typography variant="h6">Пациент не найден</Typography>;
-  }
+  
 
   return (
     <Paper sx={{ padding: 3 }}>
