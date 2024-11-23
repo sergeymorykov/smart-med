@@ -2,24 +2,23 @@ import React, { useEffect, useState } from 'react';
 import PatientCard from './PatientCard';
 import { Grid, CircularProgress, Container, Typography, CardContent, Card} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-
+import { getPatients } from '../services/api';
 
 
 function PatientListPage() {
+  const token = localStorage.getItem('token');
   const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  
   const navigate = useNavigate();
   // Загружаем данные пациентов из JSON-файла
-  useEffect(() => {
-    const fetchPatients = async () => {
-      const response = await fetch('/patients.json');
-      const data = await response.json();
-      setPatients(data);
-      setLoading(false);
-    };
-
-    fetchPatients();
+  useEffect(async () => {
+    if(!token){
+      navigate('/');
+    }
+    const patientsData = await getPatients(token);
+    setPatients(patientsData);
+    setLoading(false);
   }, []);
 
   const handleClickOpen = () => {

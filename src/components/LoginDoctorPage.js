@@ -13,10 +13,11 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       const { token } = await loginDoctor(username, password);
+      setError(token);
       localStorage.setItem('token', token);
-      navigate('/patient-status');
+      navigate('/patient-list');
     } catch (error) {
-      setError('Ошибка авторизации');
+      //setError('Ошибка авторизации');
     }
   };
 

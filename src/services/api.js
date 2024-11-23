@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://mockapi.example.com'; // Ваш API сервер
+const API_URL = 'http://localhost:8000'; // Ваш API сервер
 
 // Функция для регистрации пользователя
 export const registerDoctor = async (email, fullname, gender, address, phone_number, photo, password) => {
@@ -9,7 +9,7 @@ export const registerDoctor = async (email, fullname, gender, address, phone_num
 
 // Функция для авторизации пользователя
 export const loginDoctor = async (email, password) => {
-  const response = await axios.post(`${API_URL}/login`, { email, password });
+  const response = await axios.post(`${API_URL}/auth/sign-in`, { email, password });
   return response.data; // Возвращает объект с JWT токеном
 };
 
@@ -19,6 +19,14 @@ export const addPatient = async (token, email, fullname, gender, address, phone_
   });
   return response.data;
 };
+
+export const getPatients = async (token) => {
+  const response = await axios.get(`${API_URL}/api/patients`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return response.data;
+};
+
 
 // Функция для получения состояния пациента (пример)
 export const getPatientStatus = async (token) => {
