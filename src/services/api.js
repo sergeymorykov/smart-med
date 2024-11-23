@@ -4,7 +4,9 @@ const API_URL = 'http://localhost:8000'; // Ваш API сервер
 
 // Функция для регистрации пользователя
 export const registerDoctor = async (email, fullname, date_of_birth, specialization, password) => {
-  return axios.post(`${API_URL}/auth/sign-up`, { email, fullname, date_of_birth, specialization, password});
+  console.log({ email, fullname, date_of_birth, specialization, password});
+  const response = await axios.post(`${API_URL}/auth/sign-up`, { email, fullname, date_of_birth, specialization, password});
+  return response.data;
 };
 
 // Функция для авторизации пользователя
