@@ -6,6 +6,8 @@ import LoginDoctorPage from './components/LoginDoctorPage';
 import PatientDetail from './components/PatientDetail';
 import Header from './components/Navbar/Header';
 import PatientListPage from './components/PatientListPage';
+import PatientAnalysisPage from './components/PatientAnalysisPage';
+import SchedulePage from './components/SchedulePage';
 
 const App = () => {
   return (
@@ -17,6 +19,8 @@ const App = () => {
         <Route path="/" element={<LoginDoctorPage />} />        
         <Route path="/patient-list" element={<PatientListPage />} />
         <Route path="/patient/:patientId" element={<PatientDetail />} />
+        <Route path="/patient-analysis" element={<PatientAnalysisPage />} />
+        <Route path="/schedule" element={<SchedulePage />} />
       </Routes>
     </Router>
   );

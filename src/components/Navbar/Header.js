@@ -1,17 +1,24 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
 import "./Header.css"
 
-export default function SearchAppBar() {
-
+const Header = () => {
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
-                <Toolbar>
-                </Toolbar>
-            </AppBar>
-        </Box>
+        <header className="header">
+            <div className="header__logo">
+                <h1 className="header__link">SmartMed</h1>
+            </div>
+            <nav className="header__nav">
+                <ul className="header__menu">
+                    <li><a href="/schedule" className="header__link">Приемы</a></li>
+                    <li><a href="/patient-list" className="header__link">Пациенты</a></li>
+                    <li><a href="/patient-analysis" className="header__link">Анализы</a></li>
+                </ul>
+            </nav>
+            <div className="header__profile">
+                <button className="header__logout-btn" >Выйти</button>
+            </div>
+        </header>
     );
-}
+};
+
+export default Header;
