@@ -14,13 +14,14 @@ function PatientListPage() {
   useEffect(() => {  
 
     const fetchData = async () => {
+      
       const token = localStorage.getItem('token');
-  
+      
       if (!token) {
         navigate('/'); // Перенаправляем на главную, если токен отсутствует
         return;
       }
-  
+      
       try {
         const patientsData = await getPatients(token);
   
@@ -44,10 +45,7 @@ function PatientListPage() {
     <Container maxWidth="lg">
       <Typography variant="h3" align="center" gutterBottom>
         Список пациентов
-      </Typography>
-      {loading ? (
-        <CircularProgress sx={{ display: 'block', margin: 'auto', marginTop: '50px' }} />
-      ) : (
+      </Typography>      
         <Grid container spacing={3} justifyContent="center" sx={{ padding: 3 }}>
           <Grid item xs={12} sm={6} md={4} lg={3}> 
             <Card
@@ -73,13 +71,16 @@ function PatientListPage() {
               </CardContent>
             </Card>
           </Grid>
-          {patients.map((patient) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={patient.id}>              
-                <PatientCard patient={patient}/>              
-            </Grid>
-          ))}
-        </Grid>
-      )}      
+          {loading ? (
+            <CircularProgress sx={{ display: 'block', margin: 'auto', marginTop: '50px' }} />
+          ) : (            
+              patients.map((patient) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={patient.id}>              
+                  <PatientCard patient={patient}/>              
+              </Grid>
+            ))
+          )}
+        </Grid>          
     </Container>
   );
 }

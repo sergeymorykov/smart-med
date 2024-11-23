@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, Button, Container, Typography, Box,
    FormControl, FormLabel, RadioGroup, FormControlLabel, Radio
  } from '@mui/material';
@@ -19,18 +19,21 @@ const RegistrationPatientPage = () => {
   const [birthDate, setBirthDate] = useState(null);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const token = localStorage.getItem('token');
 
+
+  useEffect(() => {
+
+    if (!token) {
+      navigate('/');
+      return;
+    }
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const fetchData = async () => {
-      const token = localStorage.getItem('token');
-  
-      if (!token) {
-        navigate('/'); // Перенаправляем на главную, если токен отсутствует
-        return;
-      }
+    const fetchData = async () => {     
   
       try {
 
