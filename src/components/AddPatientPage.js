@@ -5,6 +5,9 @@ import { TextField, Button, Container, Typography, Box,
 import InputMask from 'react-input-mask';
 import { useNavigate } from 'react-router-dom';
 import { addPatient } from '../services/api';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
 const RegistrationPatientPage = () => {
   const [email, setEmail] = useState('');
@@ -13,6 +16,7 @@ const RegistrationPatientPage = () => {
   const [gender, setGender] = useState('');
   const [address, setAddress] = useState('');
   const [phone_number, setPhoneNumber] = useState('');
+  const [birthDate, setBirthDate] = useState(null);
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -27,8 +31,8 @@ const RegistrationPatientPage = () => {
     }
 
     try {
-      await addPatient(token, email, surname + " " + name, gender, address, phone_number);
-      navigate('/patient/${email}'); 
+      await addPatient(token, email, surname + " " + name, birthDate, gender, address, phone_number);
+      navigate('/patient-list'); 
     } catch (error) {
       setError('Ошибка регистрации');
     }
@@ -88,6 +92,15 @@ const RegistrationPatientPage = () => {
           required
           margin='normal' 
         />
+        <LocalizationProvider dateAdapter={AdapterDateFns} fullWidth>
+          <DesktopDatePicker
+            label="Дата рождения"
+            inputFormat="MM/dd/yyyy"
+            value={birthDate}
+            onChange={(newDate) => { setBirthDate(newDate) }}
+            renderInput={(params) => <TextField {...params} fullWidth />}
+          />
+        </LocalizationProvider>
         <InputMask
             mask="+7 (999) 999-9999"
             value={phone_number}
@@ -103,7 +116,7 @@ const RegistrationPatientPage = () => {
               margin='normal' 
             />
           )}
-        </InputMask>
+        </InputMask>        
         {error && <Typography color="error">{error}</Typography>}
         <Button type="submit" variant="contained" color="primary" fullWidth>
           Добавить

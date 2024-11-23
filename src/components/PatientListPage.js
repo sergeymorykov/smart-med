@@ -6,13 +6,14 @@ import { getPatients } from '../services/api';
 
 
 function PatientListPage() {
-  const token = localStorage.getItem('token');
   const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(true);
   
   const navigate = useNavigate();
   // Загружаем данные пациентов из JSON-файла
   useEffect(async () => {
+    const token = localStorage.getItem('token');
+
     if(!token){
       navigate('/');
     }
@@ -22,7 +23,7 @@ function PatientListPage() {
   }, []);
 
   const handleClickOpen = () => {
-    navigate('/register-patient'); 
+    navigate('/add-patient'); 
   };
 
   return (
@@ -59,7 +60,7 @@ function PatientListPage() {
             </Card>
           </Grid>
           {patients.map((patient) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={patient.email}>              
+            <Grid item xs={12} sm={6} md={4} lg={3} key={patient.id}>              
                 <PatientCard patient={patient}/>              
             </Grid>
           ))}

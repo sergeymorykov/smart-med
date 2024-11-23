@@ -1,20 +1,17 @@
 import React, { useState } from 'react';
-import { TextField, Button, Container, Typography, Avatar, Box,
-   FormControl, FormLabel, RadioGroup, FormControlLabel, Radio
- } from '@mui/material';
-import InputMask from 'react-input-mask';
+import { TextField, Button, Container, Typography, Box} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { registerDoctor } from '../services/api';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
 const RegistrationDoctorPage = () => {
   const [email, setEmail] = useState('');
   const [surname, setSurname] = useState('');
   const [name, setName] = useState('');
-  const [gender, setGender] = useState('');
-  const [address, setAddress] = useState('');
-  const [phone_number, setPhoneNumber] = useState('');
-  const [avatarUrl, setAvatarUrl] = useState('');
-  const [photo, setPhoto] = useState('');  
+  const [birthDate, setBirthDate] = useState(null);
+  const [specialization, setSpecialization] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
@@ -30,30 +27,10 @@ const RegistrationDoctorPage = () => {
     }
 
     try {
-      await registerDoctor(email, surname + " " + name, gender, address, phone_number, photo, password);
-      navigate('/login');
+      await registerDoctor(email, surname + " " + name, birthDate, specialization, password);
+      navigate('/');
     } catch (error) {
       setError('Ошибка регистрации');
-    }
-  };
-
-  const handleAvatarClick = () => {
-    const fileInput = document.getElementById('avatar-input');
-    fileInput.click();
-  };
-
-  const handleAvatarChange = (e) => {
-    const file = e.target.files[0];
-    if (file && file.type.startsWith('image/')) {
-      setPhoto(file);
-      
-      const reader = new FileReader();
-      reader.onload = () => {
-        setAvatarUrl(reader.result);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      setError('Пожалуйста, выберите изображение');
     }
   };
 
@@ -86,64 +63,26 @@ const RegistrationDoctorPage = () => {
           value={name}
           onChange={(e) => setName(e.target.value)}
           margin='normal'
-        />
-        <Box
-            sx={{
-                display: 'flex',
-                justifyContent: 'center', // Центрирование по горизонтали
-                alignItems: 'center', // Центрирование по вертикали
-            }}
-        >
-            <Avatar src={avatarUrl} onClick={handleAvatarClick} sx={{ width: 200, height: 200 }}/>
-            <input
-            type="file"
-            name="image"
-            accept="image/*"
-            onChange={handleAvatarChange}
-            style={{ display: 'none' }}
-            id="avatar-input"
-            />
-        </Box>       
-        <FormControl component="fieldset" required margin='normal'>
-          <FormLabel component="legend">Пол</FormLabel>
-          
-          <RadioGroup
-            name="gender"
-            value={gender}
-            onChange={(e) => setGender(e.target.value)}
-          >
-            {/* Radio кнопки для выбора пола */}
-            <FormControlLabel value="male" control={<Radio />} label="Мужской" />
-            <FormControlLabel value="female" control={<Radio />} label="Женский" />
-            <FormControlLabel value="other" control={<Radio />} label="Другой" />
-          </RadioGroup>
-        </FormControl> 
+        />             
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <DesktopDatePicker
+            label="Дата рождения"
+            inputFormat="MM/dd/yyyy"
+            value={birthDate}
+            onChange={(newDate) => { setBirthDate(newDate) }}
+            renderInput={(params) => <TextField {...params} fullWidth />}
+          />
+        </LocalizationProvider>
         <TextField
-          id="address-input"
-          label="Адрес"
+          id="specialization"
+          label="Специализация"
           variant="outlined"
           fullWidth
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
+          value={specialization}
+          onChange={(e) => setSpecialization(e.target.value)}
           required
           margin='normal' 
         />
-        <InputMask
-            mask="+7 (999) 999-9999"
-            value={phone_number}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-          >
-          {(inputProps) => (
-            <TextField
-              {...inputProps}
-              label="Телефон"
-              variant="outlined"
-              fullWidth
-              required
-              margin='normal' 
-            />
-          )}
-        </InputMask>
         <TextField
           label="Пароль"
           variant="outlined"

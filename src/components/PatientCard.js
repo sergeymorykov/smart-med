@@ -6,7 +6,7 @@ function PatientCard({ patient }) {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
-    navigate(`/patient/${patient.email}`); 
+    navigate(`/patient/${patient.id}`); 
   };
   return (
     
